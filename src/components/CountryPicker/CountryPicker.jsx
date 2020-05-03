@@ -1,22 +1,22 @@
 import React, {useState,useEffect} from 'react';
 import { Select } from 'antd';
-import { countries } from '../../api';
+import { fetchCountries } from '../../api';
 
 const { Option } = Select;
 
-const CountryPicker = () => {
+const CountryPicker = ({ handleCountryChange }) => {
 
     const [fetchedCountries,setFetchedCountries] = useState([]);
 
     useEffect(() => {
-        const fetchCountries = async () => {
-            setFetchedCountries(await countries());
+        const fetchCountriesAPI = async () => {
+            setFetchedCountries(await fetchCountries());
         }
-        fetchCountries();
+        fetchCountriesAPI();
     },[setFetchedCountries])
     return (
         <Select
-
+            onChange={handleCountryChange}
             showSearch
             style={{ width: '30%',marginBottom: '30px' }}
             placeholder="Select a Country"
@@ -26,9 +26,8 @@ const CountryPicker = () => {
             option.children.toLowerCase().indexOf(input.toLowerCase()) >= 0
             }
         >
-            <Option value="jack">Jack</Option>
-            <Option value="lucy">Lucy</Option>
-            <Option value="tom">Tom</Option>
+            <Option value="">Global</Option>
+            {fetchedCountries.map((country,i) => <Option key={i} value={country}>{country}</Option>)}
         </Select>
     )
 }
