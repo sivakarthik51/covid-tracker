@@ -31,4 +31,5 @@
 
 ## Credit
 
-Followed initial code from this amazing [tutorial](https://www.youtube.com/watch?v=khJlrj3Y6Ls&t=3951s) by JavaScript Mastery on YouTube
+1. Followed initial code from this amazing [tutorial](https://www.youtube.com/watch?v=khJlrj3Y6Ls&t=3951s) by JavaScript Mastery on YouTube
+2. The api is from this [repository](https://github.com/mathdroid/covid-19-api)
