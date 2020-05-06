@@ -74,3 +74,52 @@ export const getStatsByCountry = async (statname) => {
         console.log(error);
     }
 }
+
+export const getStatsByState = async (country) => {
+    try {
+        const {data} = await axios.get(`${url}/countries/${country}/confirmed`);
+        var stateWiseStats = {
+            confirmed: {},
+            deaths: {}
+        }
+        if(data.length>1)
+        {
+            data.forEach((stateStats) => {
+                if(stateStats.provinceState)
+                {
+                    if(stateStats.provinceState in stateWiseStats.confirmed)
+                    {
+                        stateWiseStats.confirmed[stateStats.provinceState]+= stateStats.confirmed;
+                    }
+                    else
+                    {
+                        stateWiseStats.confirmed[stateStats.provinceState] = stateStats.confirmed;
+                            
+                        
+                    }
+                    if(stateStats.provinceState in stateWiseStats.deaths)
+                    {
+                        stateWiseStats.deaths[stateStats.provinceState]+= stateStats.deaths;
+                    }
+                    else
+                    {
+                        stateWiseStats.deaths[stateStats.provinceState] = stateStats.deaths;
+                            
+                        
+                    }
+                }
+            });
+        }
+        var ret = {}
+        Object.keys(stateWiseStats).forEach((stat) => {
+            ret[stat] = Object.keys(stateWiseStats[stat]).map((key) => {
+                return [key, stateWiseStats[stat][key]]
+            })
+        });
+        return ret;
+    }
+    catch(error){
+        console.log(error);
+    }
+
+}
